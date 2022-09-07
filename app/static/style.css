@@ -1,0 +1,80 @@
+body {
+    background-color: rgb(233, 213, 193);
+}
+
+.wysrodkowanie {
+    text-align: center;
+}
+
+.wyjustowanie {
+    text-align: justify;
+}
+
+.pogrubienie {
+    font-weight: bold;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: black;
+}
+
+.nav-btn:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.news {
+    margin-left: 10%;
+    margin-right: 10%;
+    border: 1px solid black;
+    border-radius: 10px
+}
+
+.login-form {
+    width: 20%;
+    margin-left: 40%;
+}
+
+.log-frm-val-err {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+
+.img-float {
+    float: right;
+    margin-left: 16px;
+}
+
+#logout {
+    color: red;
+}
+
+#container-btn-log {
+    text-align: center;
+    width: 20%;
+    margin-left: 40%;
+}
+
+#btn-login {
+
+}
+
+#img-avatar-container {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    width: 30%;
+    margin-left: 35%;
+}
+
+#img-avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+#index {
+    text-align: justify;
+    margin-left: 10%;
+    margin-right: 10%;
+}
