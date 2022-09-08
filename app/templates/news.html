@@ -4,8 +4,8 @@
     <h1>Witaj!</h1>
     {% for news in newsy %}
         <br><article class="news">
-        <p class="pogrubienie">{{ news.tytul }}</p>
-        <p class="wyjustowanie">{{ news.tresc }}</p>
+        <p class="pogrubienie newsik">{{ news.tytul }}</p>
+        <p class="wyjustowanie newsik">{{ news.tresc }}</p>
         </article><br>
     {% endfor %}
 {% endblock %}

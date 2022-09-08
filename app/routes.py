@@ -1,10 +1,10 @@
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, session
 from flask_login import login_required, logout_user, login_user, current_user
 from werkzeug.urls import url_parse
 
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, News
 
 
 @app.route('/')
@@ -16,13 +16,19 @@ def index():
 
 @app.route('/news')
 def news():
-    return render_template('news.html')
+    newsy = News.query.all()
+    return render_template('news.html', newsy=newsy)
 
 
 @app.route('/oceny')
 @login_required
 def oceny():
-    return render_template('oceny.html')
+    user = User.query.filter_by(login=session['login']).first_or_404()
+    uczniowie = User.query.filter_by(nauczyciel=False).all()
+    if user.nauczyciel:
+        return render_template('nauczyciel.html', uczniowie=uczniowie)
+    elif not user.nauczyciel:
+        return render_template('uczen.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -33,9 +39,9 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by().first()
         if user is None or not user.check_password(form.password.data):
-            flash('Nieprawidłowe dane logowania')
             return redirect(url_for('login'))
         login_user(user)
+        session['login'] = form.login.data
         next_page = request.args.get('index')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -49,11 +55,10 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(login=form.username.data)
+        user = User(login=form.login.data, nauczyciel=form.nauczyciel.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Rejestracja przebiegła pomyślnie!')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 

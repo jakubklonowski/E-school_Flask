@@ -24,6 +24,11 @@
             <p class="log-frm-val-err">[{{ error }}]</p>
         {% endfor %}
 
+        <p class="wysrodkowanie login-form">{{ form.nauczyciel() }} {{ form.nauczyciel.label }}</p>
+        {% for error in form.nauczyciel.errors %}
+            <p class="log-frm-val-err">[{{ error }}]</p>
+        {% endfor %}
+
         <div id="container-btn-log"><button class="wysrodkowanie" id="btn-login" type="button">{{ form.submit() }}</button></div>
     </form>
 {% endblock %}

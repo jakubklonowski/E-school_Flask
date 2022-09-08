@@ -2,6 +2,10 @@ body {
     background-color: rgb(233, 213, 193);
 }
 
+h1 {
+    text-align: center;
+}
+
 .wysrodkowanie {
     text-align: center;
 }
@@ -29,6 +33,11 @@ body {
     margin-right: 10%;
     border: 1px solid black;
     border-radius: 10px
+}
+
+.newsik {
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 .login-form {
