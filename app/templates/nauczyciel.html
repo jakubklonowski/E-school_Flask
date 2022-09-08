@@ -1,11 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Panel nauczyciela</h1>
-    <table>
-        <th></th>
-        {% for uczen in uczniowie %}
-        <tr>{{ uczen }}</tr>
-        {% endfor %}
-    </table>
+    <br><h1>Panel nauczyciela</h1><br><br><br><br>
+    <div class="row">
+        <section class="col-4">
+            <ul>
+                <p>Lista uczniów:</p>
+                {% for uczen in uczniowie %}
+                <li>{{ uczen.login }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="col-4">
+
+        </section>
+
+        <section class="col-4"><form>
+            <p>Dodaj ogłoszenie</p>
+
+            <p>{{ form.tytul.label }}</p>
+            <p>{{ form.tytul() }}</p>
+            {% for error in form.tytul.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ form.tresc.label }}</p>
+            <p>{{ form.tresc() }}</p>
+            {% for error in form.tresc.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ form.submit() }}</p>
+        </form></section>
+    </div>
 {% endblock %}

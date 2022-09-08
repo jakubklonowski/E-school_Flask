@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from app.models import User
@@ -22,3 +22,9 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Login zajęty!')
+
+
+class NewsForm(FlaskForm):
+    tytul = StringField('Tytuł', validators=[DataRequired()])
+    tresc = TextAreaField('Tresc', validators=[DataRequired()])
+    submit = SubmitField('Opublikuj')
