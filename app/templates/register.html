@@ -7,28 +7,28 @@
         </div>
         {{ form.hidden_tag() }}
         <p class="wysrodkowanie login-form">{{ form.login.label }}</p>
-        <p class="wysrodkowanie login-form">{{ form.login() }}</p>
+        <p class="wysrodkowanie login-form">{{ form.login(class_="form-control") }}</p>
         {% for error in form.login.errors %}
             <p class="log-frm-val-err">[{{ error }}]</p>
         {% endfor %}
 
         <p class="wysrodkowanie login-form">{{ form.password.label }}</p>
-        <p class="wysrodkowanie login-form">{{ form.password() }}</p>
+        <p class="wysrodkowanie login-form">{{ form.password(class_="form-control") }}</p>
         {% for error in form.password.errors %}
             <p class="log-frm-val-err">[{{ error }}]</p>
         {% endfor %}
 
         <p class="wysrodkowanie login-form">{{ form.password2.label }}</p>
-        <p class="wysrodkowanie login-form">{{ form.password2() }}</p>
+        <p class="wysrodkowanie login-form">{{ form.password2(class_="form-control") }}</p>
         {% for error in form.password2.errors %}
             <p class="log-frm-val-err">[{{ error }}]</p>
         {% endfor %}
 
-        <p class="wysrodkowanie login-form">{{ form.nauczyciel() }} {{ form.nauczyciel.label }}</p>
+        <p class="wysrodkowanie login-form">{{ form.nauczyciel(class_="form-check-input") }} {{ form.nauczyciel.label }}</p>
         {% for error in form.nauczyciel.errors %}
             <p class="log-frm-val-err">[{{ error }}]</p>
         {% endfor %}
 
-        <div id="container-btn-log"><p class="wysrodkowanie" id="btn-login">{{ form.submit() }}</p></div>
+        <div id="container-btn-log"><p class="wysrodkowanie" id="btn-login">{{ form.submit(class_="btn btn-primary") }}</p></div>
     </form>
 {% endblock %}

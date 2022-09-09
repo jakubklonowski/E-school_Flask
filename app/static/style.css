@@ -70,14 +70,20 @@ h1 {
     margin-left: 16px;
 }
 
-#logout {
-    color: red;
+.fc {
+    width: 80%;
+    margin-left: 10%;
 }
 
 #container-btn-log {
     text-align: center;
     width: 20%;
     margin-left: 40%;
+}
+
+#logout-btn {
+    color: white;
+    font-weight: bold;
 }
 
 #btn-login {

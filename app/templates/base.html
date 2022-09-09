@@ -12,15 +12,16 @@
 </head>
 <body>
     <br>
-    <nav class="row wysrodkowanie">
-        <a class="col-2 nav-btn" href="{{ url_for('index') }}">Strona główna</a>
-        <a class="col-2 nav-btn" href="{{ url_for('news') }}">Ogłoszenia</a>
-        <a class="col-2 nav-btn" href="{{ url_for('oceny') }}">Oceny</a>
-        <a class="col-2 nav-btn" href="{{ url_for('login') }}">Logowanie</a>
-        <a class="col-2 nav-btn" href="{{ url_for('register') }}">Rejestracja</a>
-        <a class="col-2 nav-btn" id="logout" href="{{ url_for('logout') }}">Wyloguj</a>
+    <nav class="nav justify-content-end">
+        <a class="nav-link nav-btn" href="{{ url_for('index') }}">Strona główna</a>
+        <a class="nav-link nav-btn" href="{{ url_for('news') }}">Ogłoszenia</a>
+        <a class="nav-link nav-btn" href="{{ url_for('oceny') }}">Oceny<span class="badge bg-warning rounded-pill">Nowe</span></a>
+        <a class="nav-link nav-btn" href="{{ url_for('login') }}">Logowanie</a>
+        <a class="nav-link nav-btn" href="{{ url_for('register') }}">Rejestracja</a>
+        <a class="nav-link nav-btn btn btn-danger" id="logout-btn" href="{{ url_for('logout') }}">Wyloguj</a>
     </nav>
     <hr>
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
