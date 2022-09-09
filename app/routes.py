@@ -1,3 +1,4 @@
+import logging
 from flask import render_template, redirect, url_for, session
 from flask_login import login_required, logout_user, login_user, current_user
 
@@ -29,6 +30,8 @@ def oceny():
             n = News(tytul=form.tytul.data, tresc=form.tresc.data)
             db.session.add(n)
             db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Dodano news {}'.format(form.tytul.data))
             return redirect(url_for('news'))
         uczniowie = User.query.filter_by(nauczyciel=None).all()
         uczniowie += User.query.filter_by(nauczyciel=False).all()
@@ -67,6 +70,8 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Zarejestrowano uzytkownika {} typu nauczyciel {}'.format(form.login.data, form.nauczyciel.data))
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
