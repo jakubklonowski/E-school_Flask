@@ -3,8 +3,8 @@ from flask import render_template, redirect, url_for, session
 from flask_login import login_required, logout_user, login_user, current_user
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, NewsForm
-from app.models import User, News
+from app.forms import LoginForm, RegistrationForm, NewsForm, GradesForm
+from app.models import User, News, Ocena
 
 
 @app.route('/')
@@ -23,19 +23,30 @@ def news():
 @app.route('/oceny', methods=['GET', 'POST'])
 @login_required
 def oceny():
-    user = User.query.filter_by(login=session['login']).first_or_404()
+    user = User.query.filter_by(login=session['login']).first_or_404()  # uczen czy nauczyciel?
+
     if user.nauczyciel:
-        form = NewsForm()
-        if form.validate_on_submit():
-            n = News(tytul=form.tytul.data, tresc=form.tresc.data)
+        formO = GradesForm()
+        if formO.validate_on_submit():
+            o = Ocena(przedmiot=formO.przedmiot.data, ocena=formO.ocena.data, uczen=formO.uczen.data)
+            db.session.add(o)
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Uczeń o id={} otrzymał ocenę {} z przedmiotu {}'.format(formO.uczen.data, formO.ocena.data, formO.przedmiot.data))
+            return redirect(url_for('oceny'))
+
+        formN = NewsForm()
+        if formN.validate_on_submit():
+            n = News(tytul=formN.tytul.data, tresc=formN.tresc.data)
             db.session.add(n)
             db.session.commit()
             app.logger.setLevel(logging.INFO)
-            app.logger.info('Dodano news {}'.format(form.tytul.data))
+            app.logger.info('Dodano news {}'.format(formN.tytul.data))
             return redirect(url_for('news'))
-        uczniowie = User.query.filter_by(nauczyciel=None).all()
-        uczniowie += User.query.filter_by(nauczyciel=False).all()
-        return render_template('nauczyciel.html', uczniowie=uczniowie, form=form)
+
+        uczniowie = User.query.filter_by(nauczyciel=False).all()
+        return render_template('nauczyciel.html', uczniowie=uczniowie, formN=formN, formO=formO)
+
     elif not user.nauczyciel:
         return render_template('uczen.html')
     else:

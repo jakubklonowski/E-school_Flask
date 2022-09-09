@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     login = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     nauczyciel = db.Column(db.Boolean)
+    oceny = db.relationship('Ocena', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}, typu nauczyciel: {}>'.format(self.login, self.nauczyciel)
@@ -25,7 +26,14 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class News(UserMixin, db.Model):
+class Ocena(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    przedmiot = db.Column(db.String(64))
+    ocena = db.Column(db.String(64))
+    uczen = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tytul = db.Column(db.String(64))
     tresc = db.Column(db.String(800))

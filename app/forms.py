@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from app.models import User
@@ -22,6 +22,22 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Login zajęty!')
+
+
+class GradesForm(FlaskForm):
+    uczen = SelectField('Uczeń',
+                        choices=[(u.id, '{}'.format(u.login)) for u in User.query.filter_by(nauczyciel=False).all()],
+                        validators=[DataRequired()])
+    ocena = SelectField('Ocena', choices=[(1, 'niedostateczny'),
+                                          (2, 'dopuszczający'),
+                                          (3, 'dostateczny'),
+                                          (4, 'dobry'),
+                                          (5, 'bardzo dobry'),
+                                          (6, 'celujący')], validators=[DataRequired()])
+    przedmiot = SelectField('Przedmiot', choices=[('matematyka', 'matematyka'),
+                                                  ('j_polski', 'język polski'),
+                                                  ('j_angielski', 'język angielski')], validators=[DataRequired()])
+    submit = SubmitField('Wstaw ocenę')
 
 
 class NewsForm(FlaskForm):

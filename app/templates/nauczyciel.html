@@ -12,27 +12,48 @@
             </ul>
         </section>
 
-        <section class="col-4">
+        <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
+            {{ formO.hidden_tag() }}
+            <p>Dodaj ocenę</p>
 
-        </section>
+            <p>{{ formO.przedmiot.label }}</p>
+            <p>{{ formO.przedmiot() }}</p>
+            {% for error in formO.przedmiot.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ formO.uczen.label }}</p>
+            <p>{{ formO.uczen() }}</p>
+            {% for error in formO.uczen.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ formO.ocena.label }}</p>
+            <p>{{ formO.ocena() }}</p>
+            {% for error in formO.ocena.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ formO.submit() }}</p>
+        </form></section>
 
         <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
-            {{ form.hidden_tag() }}
+            {{ formN.hidden_tag() }}
             <p>Dodaj ogłoszenie</p>
 
-            <p>{{ form.tytul.label }}</p>
-            <p>{{ form.tytul() }}</p>
-            {% for error in form.tytul.errors %}
+            <p>{{ formN.tytul.label }}</p>
+            <p>{{ formN.tytul() }}</p>
+            {% for error in formN.tytul.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ form.tresc.label }}</p>
-            <p>{{ form.tresc() }}</p>
-            {% for error in form.tresc.errors %}
+            <p>{{ formN.tresc.label }}</p>
+            <p>{{ formN.tresc() }}</p>
+            {% for error in formN.tresc.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ form.submit() }}</p>
+            <p>{{ formN.submit() }}</p>
         </form></section>
     </div>
 {% endblock %}
