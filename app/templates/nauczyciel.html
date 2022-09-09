@@ -16,7 +16,8 @@
 
         </section>
 
-        <section class="col-4"><form>
+        <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
+            {{ form.hidden_tag() }}
             <p>Dodaj ogłoszenie</p>
 
             <p>{{ form.tytul.label }}</p>
