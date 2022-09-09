@@ -1,5 +1,9 @@
 body {
     background-color: rgb(233, 213, 193);
+    background-image: url('/static/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 h1 {
@@ -16,6 +20,16 @@ h1 {
 
 .pogrubienie {
     font-weight: bold;
+}
+
+.href {
+    text-decoration: none;
+    color: black;
+}
+
+.href:hover {
+    text-decoration: none;
+    color: black;
 }
 
 .nav-btn {
