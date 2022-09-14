@@ -1,35 +1,40 @@
-# E-platforma dla szkoły
+# E-platform for school
 
-## Autor
-Autorem projektu jest Jakub Klonowski (jakubpklonowski@gmail.com).
+## Author
+Author of this app is Jakub Klonowski (jakubpklonowski@gmail.com).
 
-## Opis
-Projekt to aplikacja webowa typu e-dziennik, przeznaczona dla szkoły. 
-W ramach aplikacji mogą poruszać się trzy rodzaje użytkowników: gość, uczeń i nauczyciel. 
-Każdemu rodzajowi użytkownika przysługują inne uprawnienia w ramach aplikacji.
+## Description
+The app is e-platform for school. Users can publish and read news and grades. 
+In future releases more features will be supported.
 
-Gość może wyświetlić stronę główną, ogłoszenia, zalogować i zarejestrować się.
+## Functionalities:
+- registration, login, sessions;
+- different levels of user permissions;
+- creating and reading data from database (CR of CRUD).
 
-Uczeń może przeglądać dodatkowo swoje oceny, wymaga zalogowania.
+## Technologies
+Project was coded in CPython language and uses SQLite database.
 
-Nauczyciel może dodatkowo przeglądać i wystawiać oceny, publikować ogłoszenia, przeglądać listę uczniów. 
-Wymaga bycia zalogowanym.
+Full list of used technologies:
+- CPython 3.10.6
+- SQLite 2.6.0
+- WTForms 3.0.1
+- Flask 2.2.2
+- Werkzeug 2.2.2
+- alembic 1.8.1
+- SQLAlchemy 1.4.41
 
-## Funkcjonalności:
-- rejestracja, logowanie i sesje użytkowników;
-- różne poziomy uprawnień użytkowników;
-- wprowadzanie do bazy danych informacji np ogłoszeń, ocen;
-- wyświetlanie danych zgromadzonych w bazie.
+Used libraries are in *requirements.txt* file as well.
 
-## Technologie
-Projekt powstał w języku CPython, z wykorzystaniem frameworka Flask i bazy SQLite.
+## Installation
+### Database initialization
+Use following commands in your terminal:
 
-## Uruchomienie projektu
-### Inicjalizacja bazy
-- flask db init
-- flask db migrate
-- flask db upgrade
+    flask db init
+    flask db migrate
+    flask db upgrade
 
-## Kierunki rozwoju
-- zmiana struktury bazy danych np. rozbicie tabeli User na Students i Teacher;
-- udostępnienie narzędzi do edycji i usuwania wprowadzonych danych np. loginów, ocen, ogłoszeń.
+## Development ideas
+- changes in database structure;
+- full CRUD support for existing data sources;
+- different languages support.
