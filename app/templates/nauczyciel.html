@@ -3,7 +3,7 @@
 {% block content %}
     <br><h1>Panel nauczyciela</h1><br><br><br><br>
     <div class="row">
-        <section class="col-3">
+        <section class="col-4">
             <ul>
                 <p>Lista uczniów:</p>
                 {% for uczen in uczniowie %}
@@ -12,22 +12,7 @@
             </ul>
         </section>
 
-        <section class="col-3">
-            <table>
-                <tr>
-                    <th><label>Wybierz ucznia:&nbsp;</label><select class="form-select">
-                        {% for uczen in uczniowie %}
-                            <option>{{ uczen.login }}</option>
-                        {% endfor %}
-                    </select></th>
-                </tr>
-                <tr>
-
-                </tr>
-            </table>
-        </section>
-
-        <section class="col-3"><form action="" method="post" novalidate class="wysrodkowanie">
+        <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
             {{ formO.hidden_tag() }}
             <p>Dodaj ocenę</p>
 
@@ -52,7 +37,7 @@
             <p>{{ formO.submit(class_="btn btn-primary") }}</p>
         </form></section>
 
-        <section class="col-3"><form action="" method="post" novalidate class="wysrodkowanie">
+        <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
             {{ formN.hidden_tag() }}
             <p>Dodaj ogłoszenie</p>
 

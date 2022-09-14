@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" novalidate>
+        <div id="img-avatar-container">
+            <img src="/static/img_avatar2.png" alt="Avatar" id="img-avatar">
+        </div>
+        {{ form.hidden_tag() }}
+        <p class="wysrodkowanie login-form">{{ form.login.label }}</p>
+        <p class="wysrodkowanie login-form">{{ form.login(class_="form-control") }}</p>
+        {% for error in form.login.errors %}
+            <p class="log-frm-val-err">[{{ error }}]</p>
+        {% endfor %}
+
+        <p class="wysrodkowanie login-form">{{ form.password.label }}</p>
+        <p class="wysrodkowanie login-form">{{ form.password(class_="form-control") }}</p>
+        {% for error in form.password.errors %}
+            <p class="log-frm-val-err">[{{ error }}]</p>
+        {% endfor %}
+
+        <div id="container-btn-log"><p class="wysrodkowanie">{{ form.submit(class_="btn btn-primary") }}</p></div>
+    </form>
+{% endblock %}

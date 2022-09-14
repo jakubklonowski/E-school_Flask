@@ -2,4 +2,16 @@
 
 {% block content %}
     <h1>Panel ucznia</h1>
+    <table class="wysrodkowanie">
+        <tr>
+            <th>Przedmiot</th>
+            <th>Ocena</th>
+        </tr>
+    {% for grade in grades %}
+        <tr>
+            <td>{{ grade.przedmiot }}</td>
+            <td>{{ grade.ocena }}</td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock %}

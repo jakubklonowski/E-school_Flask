@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
-from app.models import User
+from app.models import User, Student
 
 
 class LoginForm(FlaskForm):
@@ -26,7 +26,7 @@ class RegistrationForm(FlaskForm):
 
 class GradesForm(FlaskForm):
     uczen = SelectField('Uczeń',
-                        choices=[(u.id, '{}'.format(u.login)) for u in User.query.filter_by(nauczyciel=False).all()],
+                        choices=[(s.id, '{}'.format(s.login)) for s in Student.query.all()],
                         validators=[DataRequired()])
     ocena = SelectField('Ocena', choices=[(1, 'niedostateczny'),
                                           (2, 'dopuszczający'),
@@ -41,6 +41,6 @@ class GradesForm(FlaskForm):
 
 
 class NewsForm(FlaskForm):
-    tytul = StringField('Tytuł', validators=[DataRequired()])
-    tresc = TextAreaField('Tresc', validators=[DataRequired()])
+    title = StringField('Tytuł', validators=[DataRequired()])
+    news = TextAreaField('Treść', validators=[DataRequired()])
     submit = SubmitField('Opublikuj')
