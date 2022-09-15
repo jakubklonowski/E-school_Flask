@@ -20,39 +20,42 @@ def news():
     return render_template('news.html', newsy=newsy)
 
 
-# @app.route('/grades', methods=['GET', 'POST'])
-# @login_required
-# def grades():
-#     user = User.query.filter_by(login=session['login']).first_or_404()  # uczen czy nauczyciel?
-#
-#     if user.nauczyciel:
-#         formO = GradesForm()
-#         if formO.validate_on_submit():
-#             o = Ocena(przedmiot=formO.przedmiot.data, ocena=formO.ocena.data, uczen=formO.uczen.data)
-#             db.session.add(o)
-#             db.session.commit()
-#             app.logger.setLevel(logging.INFO)
-#             app.logger.info('Uczeń o id={} otrzymał ocenę {} z przedmiotu {}'.format(formO.uczen.data, formO.ocena.data,
-#                                                                                      formO.przedmiot.data))
-#             return redirect(url_for('oceny'))
-#
-#         formN = NewsForm()
-#         if formN.validate_on_submit():
-#             n = News(tytul=formN.tytul.data, tresc=formN.tresc.data)
-#             db.session.add(n)
-#             db.session.commit()
-#             app.logger.setLevel(logging.INFO)
-#             app.logger.info('Dodano news {}'.format(formN.tytul.data))
-#             return redirect(url_for('news'))
-#
-#         uczniowie = User.query.filter_by(nauczyciel=False).all()
-#         return render_template('nauczyciel.html', uczniowie=uczniowie, formN=formN, formO=formO)
-#
-#     elif not user.nauczyciel:
-#         studentGrades = Ocena.query.filter_by(uczen=user.id).all()
-#         return render_template('uczen.html', grades=studentGrades)
-#     else:
-#         return render_template('401.html')
+@app.route('/grades', methods=['GET', 'POST'])
+@login_required
+def grades():
+    user = User.query.filter_by(login=session['login']).first_or_404()
+
+    if user.type == 'teacher':
+
+        formG = GradesForm()
+        if formG.validate_on_submit():
+            g = Grade(subject=formG.subject.data, grade=formG.grade.data, student=formG.student.data)
+            db.session.add(g)
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Student whose id={} got grade {} from subject {}'.format(formG.student.data,
+                                                                                     formG.grade.data,
+                                                                                     formG.subject.data))
+            return redirect(url_for('grades'))
+
+        formN = NewsForm()
+        if formN.validate_on_submit():
+            n = News(title=formN.title.data, news=formN.news.data)
+            db.session.add(n)
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Added news {}'.format(formN.title.data))
+            return redirect(url_for('news'))
+
+        students = User.query.filter_by(type='student').all()
+        return render_template('nauczyciel.html', students=students, formN=formN, formG=formG)
+
+    elif not user.nauczyciel:
+        studentGrades = Grade.query.filter_by(student=user.id).all()
+        return render_template('uczen.html', grades=studentGrades)
+
+    else:
+        return render_template('401.html')
 
 
 @app.route('/login')
@@ -93,20 +96,28 @@ def login_student():
 
 
 @app.route('/register', methods=['GET', 'POST'])
-# def register():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('index'))
-#     form = RegistrationForm()
-#     if form.validate_on_submit():
-#         user = User(login=form.login.data, nauczyciel=form.nauczyciel.data)
-#         user.set_password(form.password.data)
-#         db.session.add(user)
-#         db.session.commit()
-#         app.logger.setLevel(logging.INFO)
-#         app.logger.info(
-#             'Zarejestrowano uzytkownika {} typu nauczyciel {}'.format(form.login.data, form.nauczyciel.data))
-#         return redirect(url_for('login'))
-#     return render_template('register.html', form=form)
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        if form.nauczyciel:
+            user = User(login=form.login.data, type='teacher')
+            user.set_password(form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Registered user {} of type TEACHER'.format(form.login.data))
+            return redirect(url_for('login'))
+        elif not form.nauczyciel:
+            user = User(login=form.login.data, type='student')
+            user.set_password(form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('Registered user {} of type STUDENT'.format(form.login.data))
+            return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
 
 @app.route('/logout')

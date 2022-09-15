@@ -25,18 +25,18 @@ class RegistrationForm(FlaskForm):
 
 
 class GradesForm(FlaskForm):
-    uczen = SelectField('Uczeń',
-                        choices=[(s.id, '{}'.format(s.login)) for s in Student.query.all()],
-                        validators=[DataRequired()])
-    ocena = SelectField('Ocena', choices=[(1, 'niedostateczny'),
+    student = SelectField('Uczeń',
+                          choices=[(s.id, '{}'.format(s.login)) for s in Student.query.all()],
+                          validators=[DataRequired()])
+    grade = SelectField('Ocena', choices=[(1, 'niedostateczny'),
                                           (2, 'dopuszczający'),
                                           (3, 'dostateczny'),
                                           (4, 'dobry'),
                                           (5, 'bardzo dobry'),
                                           (6, 'celujący')], validators=[DataRequired()])
-    przedmiot = SelectField('Przedmiot', choices=[('matematyka', 'matematyka'),
-                                                  ('j_polski', 'język polski'),
-                                                  ('j_angielski', 'język angielski')], validators=[DataRequired()])
+    subject = SelectField('Przedmiot', choices=[('matematyka', 'matematyka'),
+                                                ('j_polski', 'język polski'),
+                                                ('j_angielski', 'język angielski')], validators=[DataRequired()])
     submit = SubmitField('Wstaw ocenę')
 
 

@@ -6,50 +6,50 @@
         <section class="col-4">
             <ul>
                 <p>Lista uczniów:</p>
-                {% for uczen in uczniowie %}
-                <li>{{ uczen.login }}</li>
+                {% for student in students %}
+                <li>{{ student.login }}</li>
                 {% endfor %}
             </ul>
         </section>
 
         <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
-            {{ formO.hidden_tag() }}
+            {{ formG.hidden_tag() }}
             <p>Dodaj ocenę</p>
 
-            <p>{{ formO.przedmiot.label }}</p>
-            <p>{{ formO.przedmiot(class_="form-select fc") }}</p>
-            {% for error in formO.przedmiot.errors %}
+            <p>{{ formG.subject.label }}</p>
+            <p>{{ formG.subject(class_="form-select fc") }}</p>
+            {% for error in formG.subject.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ formO.uczen.label }}</p>
-            <p>{{ formO.uczen(class_="form-select fc") }}</p>
-            {% for error in formO.uczen.errors %}
+            <p>{{ formG.student.label }}</p>
+            <p>{{ formG.student(class_="form-select fc") }}</p>
+            {% for error in formG.student.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ formO.ocena.label }}</p>
-            <p>{{ formO.ocena(class_="form-select fc") }}</p>
-            {% for error in formO.ocena.errors %}
+            <p>{{ formG.grade.label }}</p>
+            <p>{{ formG.grade(class_="form-select fc") }}</p>
+            {% for error in formG.grade.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ formO.submit(class_="btn btn-primary") }}</p>
+            <p>{{ formG.submit(class_="btn btn-primary") }}</p>
         </form></section>
 
         <section class="col-4"><form action="" method="post" novalidate class="wysrodkowanie">
             {{ formN.hidden_tag() }}
             <p>Dodaj ogłoszenie</p>
 
-            <p>{{ formN.tytul.label }}</p>
-            <p>{{ formN.tytul(class_="form-control fc") }}</p>
-            {% for error in formN.tytul.errors %}
+            <p>{{ formN.title.label }}</p>
+            <p>{{ formN.title(class_="form-control fc") }}</p>
+            {% for error in formN.title.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
-            <p>{{ formN.tresc.label }}</p>
-            <p>{{ formN.tresc(class_="form-control fc") }}</p>
-            {% for error in formN.tresc.errors %}
+            <p>{{ formN.news.label }}</p>
+            <p>{{ formN.news(class_="form-control fc") }}</p>
+            {% for error in formN.news.errors %}
                 <p class="log-frm-val-err">[{{ error }}]</p>
             {% endfor %}
 
