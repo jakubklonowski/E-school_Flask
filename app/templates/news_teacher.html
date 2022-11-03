@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Ogłoszenia!</h1>
+    {% for news in newsy %}
+        <br><article class="news">
+            <p class="pogrubienie newsik">
+                {{ news.title }}
+            </p>
+
+            <p class="wyjustowanie newsik">{{ news.news }}</p>
+
+            <form action="" method="POST" class="news-form" novalidate>
+                <input type="text" value="{{ news.id }}" hidden name="edit_name">
+                <input name="method_name" value="null" hidden>
+                <button class="btn btn-outline-dark">
+                    <img src="./static/pencil.png" alt="news edit" class="news-img">
+                </button>
+            </form>
+
+            <form action="" method="POST" class="news-form" novalidate>
+                <input type="text" value="{{ news.id }}" hidden name="del_name">
+                <input name="method_name" value="DELETE" hidden>
+                <button class="btn btn-outline-dark" type="submit">
+                    <img src="./static/cross.png" alt="news del" class="news-img">
+                </button>
+            </form>
+        </article><br>
+    {% endfor %}
+{% endblock %}

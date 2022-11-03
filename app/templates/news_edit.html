@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="wysrodkowanie"><form action="" method="post" novalidate>
+            {{ formN.hidden_tag() }}
+            <p>Edytuj ogłoszenie</p>
+
+            <p>{{ formN.title.label }}</p>
+            <p>{{ formN.title(class_="form-control fc") }}</p>
+            {% for error in formN.title.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ formN.news.label }}</p>
+            <p>{{ formN.news(class_="form-control fc") }}</p>
+            {% for error in formN.news.errors %}
+                <p class="log-frm-val-err">[{{ error }}]</p>
+            {% endfor %}
+
+            <p>{{ formN.submit(class_="btn btn-primary") }}</p>
+    </form></section>
+{% endblock %}

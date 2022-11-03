@@ -59,4 +59,4 @@ class News(db.Model):
     news = db.Column(db.String(800))
 
     def __repr__(self):
-        return '<News {} to {}>'.format(self.title, self.news)
+        return '<News with title {} is {}>'.format(self.title, self.news)

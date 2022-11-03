@@ -7,25 +7,27 @@
         <div class="col-lg-3 col-md-0 col-sm-0"></div>
 
         <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card wysrodkowanie">
-                <div class="card-body">
-                    <h5 class="card-title">Uczeń</h5>
-                    <p class="card-text">Logowanie dla uczniów</p>
-                    <a href="/login_uczen" class="card-link">Logowanie</a>
+            <a href="{{ url_for('login_student') }}" class="card-link">
+                <div class="card wysrodkowanie card-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Uczeń</h5><br>
+                        <p class="card-text">Logowanie dla uczniów</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-lg-2 col-md-4 col-sm-0"></div>
 
         <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card wysrodkowanie">
-                <div class="card-body">
-                    <h5 class="card-title">Nauczyciel</h5>
-                    <p class="card-text">Logowanie dla nauczycieli</p>
-                    <a href="/login_nauczyciel" class="card-link">Logowanie</a>
+            <a href="{{ url_for('login_teacher') }}" class="card-link">
+                <div class="card wysrodkowanie card-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Nauczyciel</h5><br>
+                        <p class="card-text">Logowanie dla nauczycieli</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-lg-3 col-md-0 col-sm-0"></div>

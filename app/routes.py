@@ -1,5 +1,5 @@
 import logging
-from flask import render_template, redirect, url_for, session
+from flask import render_template, redirect, url_for, session, request
 from flask_login import login_required, logout_user, login_user, current_user
 
 from app import app, db
@@ -14,10 +14,55 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/news')
+@app.route('/news', methods=['GET', 'POST'])
 def news():
-    newsy = News.query.all()
-    return render_template('news.html', newsy=newsy)
+    if request.method == 'GET':
+        try:
+            user = User.query.filter_by(login=session['login']).first()
+            if user.type == 'teacher':
+                newsy = News.query.all()
+                return render_template('news_teacher.html', newsy=newsy)
+        except:
+            newsy = News.query.all()
+            return render_template('news.html', newsy=newsy)
+    elif request.method == 'POST':
+        try:
+            if request.form['method_name'] == 'DELETE':
+                data = request.form
+                post = data['del_name']
+                n = News.query.filter_by(id=post).first()
+                db.session.delete(n)
+                db.session.commit()
+                app.logger.setLevel(logging.INFO)
+                app.logger.info('Removed news with ID={}'.format(post))
+                return redirect(url_for('news'))
+            else:
+                data = request.form
+                id = data['edit_name']
+                return redirect('news_edit/' + id)
+        except:
+            return redirect(url_for('news'))
+
+
+@app.route('/news_edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def news_edit(id):
+    formN = NewsForm()
+    n = News.query.filter_by(id=id).first_or_404()
+
+    if request.method == 'GET':
+        formN.title.data = n.title
+        formN.news.data = n.news
+        return render_template('news_edit.html', formN=formN, news=news)
+
+    elif request.method == 'POST':
+        if formN.validate_on_submit():
+            n.title = formN.title.data
+            n.news = formN.news.data
+            db.session.commit()
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('News with id={} was edited to {}'.format(id, formN.title.data))
+            return redirect(url_for('news'))
 
 
 @app.route('/grades', methods=['GET', 'POST'])
@@ -34,8 +79,8 @@ def grades():
             db.session.commit()
             app.logger.setLevel(logging.INFO)
             app.logger.info('Student whose id={} got grade {} from subject {}'.format(formG.student.data,
-                                                                                     formG.grade.data,
-                                                                                     formG.subject.data))
+                                                                                      formG.grade.data,
+                                                                                      formG.subject.data))
             return redirect(url_for('grades'))
 
         formN = NewsForm()
@@ -48,11 +93,11 @@ def grades():
             return redirect(url_for('news'))
 
         students = User.query.filter_by(type='student').all()
-        return render_template('nauczyciel.html', students=students, formN=formN, formG=formG)
+        return render_template('teacher.html', students=students, formN=formN, formG=formG)
 
-    elif not user.nauczyciel:
+    elif user.type == 'student':
         studentGrades = Grade.query.filter_by(student=user.id).all()
-        return render_template('uczen.html', grades=studentGrades)
+        return render_template('student.html', grades=studentGrades)
 
     else:
         return render_template('401.html')
@@ -71,11 +116,13 @@ def login_teacher():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        teacher = User.query.filter_by().first()
+        teacher = User.query.filter_by(login=form.login.data).first()
         if teacher is None or not teacher.check_password(form.password.data):
-            return redirect(url_for('login'))
+            return redirect(url_for('login_teacher'))
         login_user(teacher)
         session['login'] = form.login.data
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Logged in user {} of type TEACHER'.format(form.login.data))
         return redirect('grades')
     return render_template('login_teacher.html', form=form)
 
@@ -86,11 +133,13 @@ def login_student():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        student = User.query.filter_by().first()
+        student = User.query.filter_by(login=form.login.data).first()
         if student is None or not student.check_password(form.password.data):
-            return redirect(url_for('login'))
+            return redirect(url_for('login_student'))
         login_user(student)
         session['login'] = form.login.data
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Logged in user {} of type STUDENT'.format(form.login.data))
         return redirect('grades')
     return render_template('login_student.html', form=form)
 
@@ -101,7 +150,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        if form.nauczyciel:
+        if form.teacher.data:
             user = User(login=form.login.data, type='teacher')
             user.set_password(form.password.data)
             db.session.add(user)
@@ -109,7 +158,7 @@ def register():
             app.logger.setLevel(logging.INFO)
             app.logger.info('Registered user {} of type TEACHER'.format(form.login.data))
             return redirect(url_for('login'))
-        elif not form.nauczyciel:
+        elif not form.teacher.data:
             user = User(login=form.login.data, type='student')
             user.set_password(form.password.data)
             db.session.add(user)
