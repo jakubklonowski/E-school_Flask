@@ -1,23 +1,23 @@
 # E-platform for school
-
 ## Author
 Author of this app is Jakub Klonowski (jakubpklonowski@gmail.com).
 
 ## Description
-The app is e-platform for school. Users can publish and read news and grades. 
-In future releases more features will be supported.
+The app is e-platform for school. Three types of users exist within the app: guest, student, teacher. 
 
-## Functionalities:
+## Functionalities
 - registration, login, sessions;
 - different levels of user permissions;
-- creating and reading data from database (CR of CRUD).
+- full CRUD support;
+- logging data to file.
 
 ## Technologies
-Project was coded in CPython language and uses SQLite database.
+Project was coded in Python language and uses SQLite database.
 
 Full list of used technologies:
 - CPython 3.10.6
 - SQLite 2.6.0
+- HTML5, CSS3, bootstrap5
 - WTForms 3.0.1
 - Flask 2.2.2
 - Werkzeug 2.2.2
@@ -34,7 +34,9 @@ Use following commands in your terminal:
     flask db migrate
     flask db upgrade
 
+Database **will not** be populated.
+
 ## Development ideas
-- changes in database structure;
-- full CRUD support for existing data sources;
-- different languages support.
+- RWD;
+- aria;
+- different UI languages support.
